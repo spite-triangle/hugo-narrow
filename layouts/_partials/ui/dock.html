@@ -45,7 +45,7 @@
     {{ end }}
 
 
-    <button
+    <!-- <button
       id="dock-search"
       class="text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 xs:px-3 xs:py-1.5 flex shrink-0 items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 focus:ring-2 focus:outline-none sm:px-4 sm:py-2"
       title="{{ T "ui.dockSearch" }}"
@@ -53,10 +53,10 @@
     >
       {{ partial "features/icon.html" (dict "name" "search" "size" "sm" "ariaLabel" "") }}
       <span class="hidden md:inline">{{ T "ui.dockSearch" }}</span>
-    </button>
+    </button> -->
 
     <!-- 分隔线 -->
-    <div class="bg-border xs:mx-1 mx-2 h-6 w-px sm:mx-2"></div>
+    <!-- <div class="bg-border xs:mx-1 mx-2 h-6 w-px sm:mx-2"></div> -->
 
     <!-- 滚动到评论区域按钮 - 只在文章页面且评论启用时显示 -->
     {{ $commentsEnabled := and .Site.Params.comments.enabled (ne .Params.comments false) }}

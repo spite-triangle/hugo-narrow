@@ -49,6 +49,7 @@
     dockBackToTop = "Back to top"
     dockTop       = "Top"
     toc           = "Table of contents"
+    sections      = "Sections"
 
     searchClear        = "Clear"
     searchPlaceholder  = "Search posts..."

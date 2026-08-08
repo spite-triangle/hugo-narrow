@@ -1,0 +1,9 @@
+{{/* 头部搜索按钮 - 打开搜索模态框（与 dock 中的搜索按钮功能一致） */}}
+<button
+  id="header-search"
+  class="border-border bg-background text-muted-foreground hover:text-primary hover:bg-primary/10 focus:ring-primary/20 flex h-10 w-10 items-center justify-center rounded-lg border transition-all duration-300 ease-out hover:scale-105 focus:ring-2 focus:outline-none active:scale-95"
+  title="{{ T "ui.dockSearch" }}"
+  aria-label="{{ T "ui.dockSearch" }}"
+>
+  {{ partial "features/icon.html" (dict "name" "search" "class" "relative z-10" "size" "md" "ariaLabel" (T "ui.dockSearch")) }}
+</button>

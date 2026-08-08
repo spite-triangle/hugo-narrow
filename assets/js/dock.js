@@ -24,8 +24,7 @@
 
   // 滚动事件处理
   function handleScroll() {
-    const currentScrollTop =
-      window.pageYOffset || document.documentElement.scrollTop;
+    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
     // 判断滚动方向
     if (currentScrollTop < lastScrollTop) {
@@ -50,7 +49,7 @@
         break;
       case "float":
         // 悬浮模式在滚动时自动隐藏 dock
-        if (isDockVisible && (currentScrollTop > lastScrollTop)) {
+        if (isDockVisible && currentScrollTop > lastScrollTop) {
           hideDock();
         }
         break;
@@ -68,11 +67,7 @@
 
   // 隐藏 dock
   function hideDock() {
-    dock.classList.remove(
-      "translate-y-0",
-      "opacity-100",
-      "pointer-events-auto",
-    );
+    dock.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
     dock.classList.add("translate-y-24", "opacity-0", "pointer-events-none");
     isDockVisible = false;
   }
@@ -106,7 +101,7 @@
   // 悬浮模式触发器事件处理
   if (floatTrigger && dockMode === "float") {
     let hoverTimer;
-    
+
     // 点击触发器切换 dock
     floatTrigger.addEventListener("click", function (e) {
       e.preventDefault();
@@ -127,7 +122,7 @@
       clearTimeout(hoverTimer);
       // 鼠标离开时隐藏 dock
       setTimeout(() => {
-        if (isDockVisible && !dock.matches(':hover')) {
+        if (isDockVisible && !dock.matches(":hover")) {
           hideDock();
         }
       }, 200);
@@ -140,7 +135,7 @@
 
     dock.addEventListener("mouseleave", function () {
       setTimeout(() => {
-        if (isDockVisible && !floatTrigger.matches(':hover')) {
+        if (isDockVisible && !floatTrigger.matches(":hover")) {
           hideDock();
         }
       }, 200);
@@ -190,12 +185,13 @@
     });
   }
 
+  // 搜索按钮（dock 与 header）
+  const searchBtnIds = ["dock-search", "header-search"];
+  searchBtnIds.forEach(function (id) {
+    const btn = document.getElementById(id);
+    if (!btn) return;
 
-
-  // 搜索按钮
-  const searchBtn = document.getElementById("dock-search");
-  if (searchBtn) {
-    searchBtn.addEventListener("click", function (e) {
+    btn.addEventListener("click", function (e) {
       e.preventDefault();
 
       const detail = { origin: "dock", handled: false };
@@ -205,7 +201,7 @@
         window.Search.toggle();
       }
     });
-  }
+  });
 
   // 评论按钮 - 只在文章页面且评论启用时存在
   // 主题的评论区由统一的 #comments 容器包裹，直接定位即可，无需匹配各评论系统的元素
@@ -262,5 +258,4 @@
       hideDock();
       break;
   }
-
 })();

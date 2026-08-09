@@ -28,6 +28,7 @@
   copied          = "Đã sao chép"
   expand          = "Mở rộng"
   collapse        = "Thu gọn"
+  terminal        = "Terminal"
 
 [nav]
     anchor        = "Liên kết đến phần này"

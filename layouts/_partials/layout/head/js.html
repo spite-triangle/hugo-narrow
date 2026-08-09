@@ -130,6 +130,32 @@
 {{ end }}
 
 
+<!-- 终端代码块脚本 - 只在页面包含 term 代码块时加载 -->
+{{- if .Store.Get "hasTerm" }}
+  {{- with resources.Get "js/term.js" }}
+    {{- $opts := dict
+      "minify" (not hugo.IsDevelopment)
+      "sourceMap" (cond hugo.IsDevelopment "external" "")
+      "targetPath" "js/term.js"
+    }}
+    {{- with . | js.Build $opts }}
+      {{- if hugo.IsDevelopment }}
+        <script src="{{ .RelPermalink }}" defer></script>
+      {{- else }}
+        {{- with . | fingerprint }}
+          <script
+            src="{{ .RelPermalink }}"
+            integrity="{{ .Data.Integrity }}"
+            crossorigin="anonymous"
+            defer
+          ></script>
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+
 <!-- 自定义 JS 文件 -->
 {{- $customJsFiles := resources.Match "js/custom/*.js" }}
 {{- range $customJsFiles }}

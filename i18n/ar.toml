@@ -43,6 +43,7 @@
   copied          = "تم النسخ"
   expand          = "توسيع"
   collapse        = "طي"
+  terminal        = "الطرفية"
 
 [nav]
     anchor        = "رابط إلى هذا القسم"

@@ -1,0 +1,131 @@
+{{/* 终端代码块渲染钩子
+
+  用法：
+  ```term
+  $ npm install # 安装依赖
+  added 10 packages
+  $ docker run \
+  -d \
+  --name nginx \
+  nginx:latest
+  ```
+
+  规则：
+  - 以 `$` 开头的行为命令（提示符单独高亮），其余为输出文本
+  - 行尾为 `\` 时，下一行归入同一命令（续行，保留缩进展示）
+  - 命令支持 ` #` 行内注释：仅展示，复制时剔除；`\` 续行在复制时合并为单行
+  - 每条命令一个复制按钮（hover 显示），复制内容存于 data-copy
+*/}}
+
+{{- $termId := printf "term-%d" .Ordinal -}}
+{{- $inner := replaceRE "\r\n?" "\n" .Inner -}}
+{{- $lines := split (trim $inner "\n") "\n" -}}
+
+{{/* 逐行解析（状态机），见 helpers/term-line.html */}}
+{{- $s := newScratch -}}
+{{- $s.Set "blocks" slice -}}
+{{- $s.Set "curRows" slice -}}
+{{- $s.Set "copyParts" slice -}}
+{{- $s.Set "inCmd" false -}}
+{{- $s.Set "prevSlash" false -}}
+
+{{- range $lines -}}
+  {{- $line := . -}}
+  {{- $isCmd := hasPrefix $line "$" -}}
+  {{- $isCont := and ($s.Get "inCmd") ($s.Get "prevSlash") -}}
+
+  {{- if $isCmd -}}
+    {{/* 新命令开始，先闭合上一条命令 */}}
+    {{- if $s.Get "inCmd" -}}
+      {{- $s.Set "blocks" ($s.Get "blocks" | append (dict "type" "cmd-group" "copy" (delimit ($s.Get "copyParts") " ") "rows" ($s.Get "curRows"))) -}}
+    {{- end -}}
+    {{- $parsed := partial "helpers/term-line.html" (dict "text" $line "prompt" true) -}}
+    {{- $s.Set "curRows" (slice (dict "prompt" true "text" $parsed.text "comment" $parsed.comment)) -}}
+    {{- $s.Set "copyParts" (slice $parsed.copy) -}}
+    {{- $s.Set "inCmd" true -}}
+    {{- $s.Set "prevSlash" $parsed.slash -}}
+  {{- else if $isCont -}}
+    {{/* 续行，归入当前命令 */}}
+    {{- $parsed := partial "helpers/term-line.html" (dict "text" $line "prompt" false) -}}
+    {{- $s.Set "curRows" ($s.Get "curRows" | append (dict "prompt" false "text" $parsed.text "comment" $parsed.comment)) -}}
+    {{- $s.Set "copyParts" ($s.Get "copyParts" | append $parsed.copy) -}}
+    {{- $s.Set "prevSlash" $parsed.slash -}}
+  {{- else -}}
+    {{/* 输出行，先闭合当前命令 */}}
+    {{- if $s.Get "inCmd" -}}
+      {{- $s.Set "blocks" ($s.Get "blocks" | append (dict "type" "cmd-group" "copy" (delimit ($s.Get "copyParts") " ") "rows" ($s.Get "curRows"))) -}}
+      {{- $s.Set "inCmd" false -}}
+    {{- end -}}
+    {{- $s.Set "blocks" ($s.Get "blocks" | append (dict "type" "out" "text" $line)) -}}
+    {{- $s.Set "prevSlash" false -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* 闭合末尾未结束的命令 */}}
+{{- if $s.Get "inCmd" -}}
+  {{- $s.Set "blocks" ($s.Get "blocks" | append (dict "type" "cmd-group" "copy" (delimit ($s.Get "copyParts") " ") "rows" ($s.Get "curRows"))) -}}
+{{- end -}}
+
+{{- $blocks := $s.Get "blocks" -}}
+
+{{- .Page.Store.Set "hasTerm" true -}}
+
+
+<div
+  class="term-block my-6 overflow-hidden rounded-xl border shadow-sm"
+  data-term-block
+  data-term-id="{{ $termId }}"
+>
+  <div class="term-header flex items-center justify-between border-b px-4 py-3">
+    <div class="flex items-center gap-3">
+      <span class="flex items-center gap-1.5" aria-hidden="true">
+        <span class="h-3 w-3 rounded-full bg-[#ff5f57]"></span>
+        <span class="h-3 w-3 rounded-full bg-[#febc2e]"></span>
+        <span class="h-3 w-3 rounded-full bg-[#28c840]"></span>
+      </span>
+      <span class="term-title text-sm font-medium">{{ T "code.terminal" }}</span>
+    </div>
+  </div>
+  <div class="overflow-x-auto p-4">
+    <div class="term-body font-mono text-sm leading-relaxed">
+      {{- range $blocks -}}
+        {{- if eq .type "cmd-group" -}}
+          <div class="group relative pr-10" data-term-group data-copy="{{ .copy }}">
+            <button
+              class="term-copy-btn absolute top-0 right-0 z-10 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium opacity-0 transition-all duration-200 ease-out group-hover:opacity-100 focus:ring-2 focus:ring-[#3fb950]/20 focus:outline-none"
+              type="button"
+              data-term-copy
+              data-label-copy="{{ T `code.copy` }}"
+              data-label-copied="{{ T `code.copied` }}"
+              title="{{ T `code.copy` }}"
+              aria-label="{{ T `code.copy` }}"
+            >
+              <span class="copy-icon">
+                {{ partial "features/icon.html" (dict "name" "copy" "size" "xs" "ariaLabel" "") }}
+              </span>
+              <span class="copy-text hidden sm:inline">{{ T "code.copy" }}</span>
+            </button>
+            <div class="whitespace-pre">
+              {{- range .rows -}}
+                <div>
+                  {{- if .prompt -}}
+                    <span class="term-prompt font-semibold select-none">$</span
+                    ><span class="pl-2">{{ .text }}</span>{{- if .comment -}}
+                      <span class="term-comment pl-2 italic select-none"># {{ .comment }}</span>
+                    {{- end -}}
+                  {{- else -}}
+                    {{- .text -}}{{ if .comment -}}
+                      <span class="term-comment italic select-none"># {{ .comment }}</span>
+                    {{- end -}}
+                  {{- end -}}
+                </div>
+              {{- end -}}
+            </div>
+          </div>
+        {{- else -}}
+          <div class="term-output whitespace-pre">{{ .text }}</div>
+        {{- end -}}
+      {{- end -}}
+    </div>
+  </div>
+</div>

@@ -28,6 +28,7 @@
   copied          = "コピーしました"
   expand          = "展開"
   collapse        = "折りたたむ"
+  terminal        = "ターミナル"
 
 [nav]
     anchor        = "このセクションへのリンク"

@@ -2,41 +2,23 @@
 
 # Hugo Narrow
 
-A Modern Hugo Theme with Multiple Color Schemes - Built on TailwindCSS 4.
+[Hugo](https://gohugo.io/) 原项目
 
-**[Documentation](https://tom2almighty.github.io/hugo-narrow-docs)** · **[Demo](https://tom2almighty.github.io/hugo-narrow)** · **[中文](README.zh-Hans.md)**
+**[文档](https://tom2almighty.github.io/hugo-narrow-docs)** · **[演示](https://tom2almighty.github.io/hugo-narrow/zh-hans/)** 
 
-## ✨ Features
+# 改进
 
-- Multiple Color Schemes
-- Custom Colors
-- Dark Mode
-- Table of Contents
-- Search Functionality
-- Comment Systems
-- Analytics Systems
-- Enhanced Markdown
-- Enhanced Code Blocks
-- Multilingual Support
-- Katex Support
-- Mermaid Support
-- Lightbox
-- Justified/Masonry/Grid Gallery with markdown
+- 文章添加 `section` 展示，且支持 `left` 展示
 
-## 📄 License
+    ```yaml
+    toc:
+      enabled: true # Enable or disable TOC globally
+      position: "left" # Options: center | side | left 
+    ```
+- 修复 `latex` 复杂展示问题
+- `posts` 界面列表增加 `section` 展示
+- 添加 `term` 终端效果支持
 
-This project is open source under the [GPL-3.0](LICENSE).
+## 📄 许可证
 
-## 🙏 Acknowledgments
-
-- [Hugo](https://gohugo.io/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [KaTeX](https://katex.org/)
-- [Mermaid](https://mermaid.js.org/)
-- [Daisyui](https://daisyui.com/)
-- [Tweakcn](https://tweakcn.com/)
-- [Hexo Theme icarus](https://github.com/ppoffice/hexo-theme-icarus)
-- [Hugo Theme Stack](https://stack.jimmycai.com/)
-- [Vercel](https://vercel.com)
-- [iconify](https://iconify.design/)
-- [Awesome-Merge-Picture](https://github.com/XiCheng148/Awesome-Merge-Picture)
+本项目基于 [GPL-3.0](LICENSE) 开源。

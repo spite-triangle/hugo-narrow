@@ -28,6 +28,7 @@
   copied          = "已複製"
   expand          = "展開"
   collapse        = "摺疊"
+  terminal        = "終端機"
 
 [nav]
     anchor        = "連結到此部分"

@@ -37,7 +37,8 @@
 {{- $hasParenMath := gt (len (findRE `\\\(` $contentToScan)) 0 -}}
 {{- $hasBracketMath := gt (len (findRE `\\\[` $contentToScan)) 0 -}}
 {{- $hasInlineMath := gt (len (findRE `(^|[^$])\$[^$\n]+\$` $contentToScan)) 0 -}}
-{{- $shouldLoad := and $featureEnabled (or $hasBlockMath $hasParenMath $hasBracketMath $hasInlineMath) -}}
+{{- $hasMathCodeBlock := .Store.Get "hasMathBlock" | default false -}}
+{{- $shouldLoad := and $featureEnabled (or $hasBlockMath $hasParenMath $hasBracketMath $hasInlineMath $hasMathCodeBlock) -}}
 
 {{- if $shouldLoad -}}
   <!-- KaTeX 数学公式支持 -->

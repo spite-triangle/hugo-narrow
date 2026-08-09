@@ -31,6 +31,7 @@
   copied          = "Kopiert"
   expand          = "Erweitern"
   collapse        = "Einklappen"
+  terminal        = "Terminal"
 
 [nav]
     anchor        = "Link zu diesem Abschnitt"

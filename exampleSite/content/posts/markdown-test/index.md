@@ -186,9 +186,12 @@ This is a paragraph with ==highlighted text==.
 
 ## Superscript and Subscript
 
-H~2~O is the chemical formula for water.
+> Goldmark's `superscript`/`subscript` extensions conflict with LaTeX math `^`/`~`, so they are disabled by the theme.
+> Please use HTML tags for superscripts and subscripts (`unsafe: true` is enabled):
 
-E = mc^2^ is Einstein's mass-energy equation.
+H<sub>2</sub>O is the chemical formula for water.
+
+E = mc<sup>2</sup> is Einstein's mass-energy equation.
 
 ## Keyboard Keys
 
@@ -204,7 +207,28 @@ $$x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$$
 
 $$e^{i\pi} + 1 = 0$$
 
-$$\begin{pmatrix} a & b \\\\ c & d \end{pmatrix} \begin{pmatrix} x \\\\ y \end{pmatrix} = \begin{pmatrix} ax + by \\\\ cx + dy \end{pmatrix}$$
+> For complex display formulas containing `\\` line breaks, `\{` literal braces, etc.,
+> it is recommended to use the `math` code fence—the content inside the fence
+> does not go through Markdown escaping, so no LaTeX double escaping is needed:
+
+```math
+\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} ax + by \\ cx + dy \end{pmatrix}
+```
+
+## Terminal
+
+Code blocks identified by the `term` language identifier:
+
+```term
+$ kubectl apply \
+    -f deploy.yaml \ # apply deployment
+    -n default
+deployment.apps/nginx created
+$ npm install # install dependencies
+added 10 packages in 2s
+$ git commit -am "fix: typo" # commit changes
+[main abc1234] fix: typo
+```
 
 ## Mermaid
 

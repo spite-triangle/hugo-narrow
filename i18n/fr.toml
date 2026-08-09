@@ -31,6 +31,7 @@
   copied          = "Copié"
   expand          = "Déployer"
   collapse        = "Replier"
+  terminal        = "Terminal"
 
 [nav]
     anchor        = "Lien vers cette section"

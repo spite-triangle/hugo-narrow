@@ -28,7 +28,7 @@
   copied          = "복사됨"
   expand          = "확장"
   collapse        = "접기"
-
+  terminal        = "터미널"
 [nav]
     anchor        = "이 섹션에 대한 링크"
     backHome      = "홈으로"

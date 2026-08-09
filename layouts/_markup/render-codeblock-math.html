@@ -1,0 +1,21 @@
+{{/* Math (LaTeX) code block render hook
+
+  用法：
+  ```math
+  \begin{aligned}
+  (1 + 0) &= \{0, 1\}\\
+  &= 1^* + 11 + 1
+  \end{aligned}
+  ```
+
+  围栏代码块内容不会经过 Goldmark 的转义/上标处理，
+  因此 LaTeX 中的 \\（换行）、\{、^ 等都无需二次转义，
+  与 $$...$$ 显示公式不同（后者需要把 \\ 写成 \\\\）。
+
+  输出时用 $$...$$ 包裹，交由 KaTeX auto-render 渲染为 display math。
+*/}}
+
+{{ .Page.Store.Set "hasMathBlock" true }}
+<div class="math-block">
+    $${{ .Inner | htmlEscape | safeHTML }}$$
+</div>

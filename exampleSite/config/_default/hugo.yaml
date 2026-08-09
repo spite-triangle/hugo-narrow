@@ -41,6 +41,10 @@ markup:
     renderer:
       unsafe: true
     extensions:
+      # 注意：subscript/superscript 必须保持禁用。
+      # 它们把 ^ 和 ~ 当作上标/下标分隔符，会破坏 LaTeX 数学公式中的 ^ / ~
+      # （例如 $A^*$ 会被解析成 <sup>*</sup>）。需要上下标时请使用 HTML 标签
+      # <sub>/<sup>（unsafe: true 已开启）。
       extras:
         delete:
           enable: true
@@ -49,9 +53,9 @@ markup:
         mark:
           enable: true
         subscript:
-          enable: true
+          enable: false
         superscript:
-          enable: true   
+          enable: false
       strikethrough: true 
   highlight:
     codeFences: true

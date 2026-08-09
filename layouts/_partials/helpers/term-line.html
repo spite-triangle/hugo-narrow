@@ -1,0 +1,39 @@
+{{/* 解析 term 代码块的单行内容：拆分命令文本与注释
+
+  入参: dict "text" "<行内容>" "prompt" true|false（是否含 $ 提示符）
+  返回: dict
+  "text"    - 命令部分（已去 $ 前缀；保留尾部 \ 续行符与原始缩进）
+  "comment" - 注释部分（含 #），无注释则为空字符串
+  "copy"    - 可复制片段（去注释、去尾部 \、TrimSpace）
+  "slash"   - 该行是否以 \ 结尾（判断续行）
+*/}}
+
+{{- $text := .text -}}
+{{- $prompt := .prompt | default false -}}
+
+{{- $body := $text -}}
+{{- if $prompt -}}
+  {{- $body = strings.TrimPrefix "$" $body -}}
+  {{- $body = strings.TrimLeft " \t" $body -}}
+{{- end -}}
+
+{{- $comment := "" -}}
+{{- $trimmed := strings.TrimLeft " \t" $body -}}
+{{- if hasPrefix $trimmed "#" -}}
+  {{- /* 整行都是注释（如 `$ # foo` 或续行 `  # foo`），注释内容不含 # */ -}}
+  {{- $comment = strings.TrimLeft "# " $body -}}
+  {{- $body = "" -}}
+{{- else -}}
+  {{- /* 行内注释：以空格 + # 为界拆分，注释内容不含 # */ -}}
+  {{- $parts := strings.Split $body " #" -}}
+  {{- if gt (len $parts) 1 -}}
+    {{- $comment = strings.TrimSpace (delimit (after 1 $parts) " #") -}}
+    {{- $body = strings.TrimRight " " (index $parts 0) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $copy := strings.TrimSuffix "\\" (strings.TrimSpace $body) -}}
+{{- $copy = strings.TrimSpace $copy -}}
+{{- $slash := hasSuffix (strings.TrimRight " \t" $body) "\\" -}}
+
+{{- return (dict "text" $body "comment" $comment "copy" $copy "slash" $slash) -}}

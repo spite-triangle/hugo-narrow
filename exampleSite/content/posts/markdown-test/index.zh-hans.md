@@ -187,9 +187,12 @@ async function fetchUser(id) {
 
 ## 上标和下标
 
-H~2~O 是水的化学分子式。
+> Goldmark 的 `superscript`/`subscript` 扩展与 LaTeX 数学中的 `^`/`~` 冲突，主题已禁用。
+> 需要上下标时请使用 HTML 标签（`unsafe: true` 已开启）：
 
-E = mc^2^ 是爱因斯坦的质能方程。
+H<sub>2</sub>O 是水的化学分子式。
+
+E = mc<sup>2</sup> 是爱因斯坦的质能方程。
 
 ## 键盘按键
 
@@ -206,7 +209,28 @@ $$x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$$
 
 $$e^{i\pi} + 1 = 0$$
 
-$$\begin{pmatrix} a & b \\\\ c & d \end{pmatrix} \begin{pmatrix} x \\\\ y \end{pmatrix} = \begin{pmatrix} ax + by \\\\ cx + dy \end{pmatrix}$$
+> 含 `\\` 换行、`\{` 字面花括号等复杂显示公式，建议使用 `math` 代码围栏——围栏内容
+> 不经过 Markdown 转义处理，LaTeX 无需二次转义：
+
+```math
+\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} ax + by \\ cx + dy \end{pmatrix}
+```
+
+## 命令行
+
+由 `term` 标识的代码块
+
+```term
+$ kubectl apply \
+    -f deploy.yaml \ # apply deployment
+    -n default
+deployment.apps/nginx created
+$ npm install # install dependencies
+added 10 packages in 2s
+$ git commit -am "fix: typo" # commit changes
+[main abc1234] fix: typo
+```
+
 
 ## 图表
 

@@ -19,11 +19,13 @@ permalinks:
   projects: /projects/:slug/
   pages: /:slug/
 
+page:
+  nextPrevInSectionSortOrder: "asc" 
+
 # pagination
 pagination:
-  pagerSize: 6
+  pagerSize: 10
   path: "page"
-
 
 taxonomies:
   category: categories

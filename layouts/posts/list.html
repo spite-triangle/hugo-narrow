@@ -2,7 +2,7 @@
   {{ $mainSections := .Site.MainSections | default (slice "posts") }}
   {{ $currentSection := .Section }}
   {{ $isMainSection := in $mainSections $currentSection }}
-
+  {{ $paginator := .Paginate .Pages }}
 
   <div class="mx-auto py-6">
     <!-- 页面标题和描述 -->

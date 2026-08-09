@@ -46,6 +46,7 @@
     dockBackToTop = "返回顶部"
     dockTop       = "顶部"
     toc           = "目录"
+    sections      = "版块"
 
     searchClear        = "清空"
     searchPlaceholder  = "搜索文章..."

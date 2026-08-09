@@ -35,7 +35,7 @@
               >
                 {{ $currentSection := .CurrentSection }}
                 {{ $currentLink := .RelPermalink }}
-                {{ range $currentSection.RegularPages.Reverse }}
+                {{ range $currentSection.RegularPages }}
                   {{ if eq .RelPermalink $currentLink }}
                     <h2 class="active">
                       <a href="{{ .RelPermalink }}" class="active font-medium">{{ .LinkTitle }}</a>
@@ -102,7 +102,7 @@
               >
                 {{ $currentSection := .CurrentSection }}
                 {{ $currentLink := .RelPermalink }}
-                {{ range $currentSection.RegularPages.Reverse }}
+                {{ range $currentSection.RegularPages }}
                   {{ if eq .RelPermalink $currentLink }}
                     <h2 class="active">
                       <a href="{{ .RelPermalink }}" class="active font-medium">{{ .LinkTitle }}</a>

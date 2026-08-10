@@ -9,12 +9,12 @@
   背景/边框用主题主色与深色基底混合，始终呈现深色；
   提示符沿用主题的 tip 语义绿。 */
 .term-block {
-  --term-bg: color-mix(in oklch, var(--color-primary) 10%, oklch(0.13 0.005 265));
-  --term-bg-header: color-mix(in oklch, var(--color-primary) 15%, oklch(29.298% 0.01741 266.377));
-  --term-border: color-mix(in oklch, var(--color-primary) 45%, oklch(0.25 0.01 265));
+  --term-bg: color-mix(in oklch, var(--color-primary) 20%, oklch(0.13 0.005 265));
+  --term-bg-header: color-mix(in oklch, var(--color-primary) 25%, oklch(29.298% 0.01741 266.377));
+  --term-border: color-mix(in oklch, var(--color-primary) 35%, oklch(0.25 0.01 265));
   --term-fg: oklch(0.93 0.01 0);
-  --term-muted: oklch(0.64 0.02 0);
-  --term-dim: oklch(0.5 0.02 0);
+  --term-muted: oklch(70.9% 0.00008 271.152);
+  --term-dim: oklch(50.731% 0.09428 148.522);
   --term-prompt: var(--color-tip);
 
   background-color: var(--term-bg);

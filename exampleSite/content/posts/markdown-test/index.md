@@ -118,6 +118,21 @@ const asyncFunction = async () => {
 };
 ```
 
+```json
+/* launch.json */
+{
+	"version": "0.2.0",
+	"configurations": [
+        {
+            "type": "mock",
+            "request": "launch",
+            // ...
+            "debugServer": 4711 // 指定需要连接的调试服务
+        }
+    ]
+}
+```
+
 ## Tabs
 
 Use the `tabs` and `tab` shortcodes to switch between arbitrary Markdown content.

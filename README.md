@@ -20,6 +20,10 @@
 - 添加 `term` 终端效果支持
 - 数字序号去掉圆形底圈
 
+# skill
+
+通过 [md to hugo skill](./skills/md-to-hugo/) 可实现现有`markdown`笔记快速转换为 `hugo` 文档结构。
+
 ## 📄 许可证
 
 本项目基于 [GPL-3.0](LICENSE) 开源。

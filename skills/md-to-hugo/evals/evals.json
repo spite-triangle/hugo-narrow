@@ -1,0 +1,38 @@
+{
+  "skill_name": "md-to-hugo",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "将 content/posts/docs/compiler 卷转换为 hugo 文档结构，输出到临时目录",
+      "expected_output": "compiler/_index.md 与每个章节的 index.md + resources/，frontmatter 完整，图片/term 已转换",
+      "files": [],
+      "expectations": [
+        "每章生成 index.md，frontmatter 含 title/date/description/weight/tags/categories",
+        "图片引用重写为 ./resources/<basename> 并拷贝到 resources/",
+        "term 代码块提示符精简为 $ ",
+        "_index.md 含 <!-- VOLUME_OVERVIEW_START --> 占位块"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "将 content/posts/docs/compiler 卷转换为 hugo 文档结构，输出到临时目录。注意：无资源的章节不要创建 resources 文件夹。",
+      "expected_output": "无资源的章节不生成 resources/ 空目录；有资源的章节正常生成 resources/ 并拷贝资源",
+      "files": [],
+      "expectations": [
+        "正文无图片/视频引用的章节不创建 resources/ 目录",
+        "正文有图片/视频引用的章节创建 resources/ 并包含拷贝的资源",
+        "已存在的空 resources/ 目录会被 verify 报 FAIL: empty resources dir"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "将 content/posts/docs/compiler 卷转换为 hugo 文档结构，输出到临时目录。校验卷简介：_index.md 中 VOLUME_OVERVIEW_START/END 之间的内容若仍为「卷内容简介待 subagent 生成」占位或为空，verify 必须报 MISSING: _index.md overview。",
+      "expected_output": "卷简介未由 subagent 填写时 verify 报告 MISSING: _index.md overview；填写后复跑通过",
+      "files": [],
+      "expectations": [
+        "未填写卷简介时 verify 输出 MISSING: _index.md overview",
+        "填写卷简介后复跑 verify 不再报告 _index.md overview"
+      ]
+    }
+  ]
+}

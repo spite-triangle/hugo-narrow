@@ -26,7 +26,7 @@
 }
 
 .prose ol > li {
-  padding-left: 2rem;
+  padding-left: 1.75rem;
   counter-increment: item;
 }
 
@@ -62,41 +62,42 @@
 
 /* ========== 有序列表标记 ========== */
 
-/* 一级 */
+/* 一级：阿拉伯数字 */
 .prose ol > li::before {
-  content: counter(item);
+  content: counter(item) ".";
   position: absolute;
   left: 0;
-  top: 0.35em;
-  width: 1.25rem;
-  height: 1.25rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-primary);
-  color: white;
-  font-size: 0.75rem;
-  font-weight: bold;
-  line-height: 1;
+  top: 0;
+  width: 1.5rem;
+  text-align: right;
+  padding-right: 0.25rem;
+  color: var(--color-primary);
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
 }
 
-/* 二级 */
+/* 二级：小写字母，主色加粗 */
+.prose ol ol > li {
+  padding-left: 1.25rem;
+}
+
 .prose ol ol > li::before {
-  width: 1.1rem;
-  height: 1.1rem;
-  top: 0.45em;
-  font-size: 0.7rem;
-  background: color-mix(in srgb, var(--color-primary) 70%, white);
+  content: counter(item, lower-alpha) ".";
+  width: 1.25rem;
+  color: var(--color-primary);
+  font-weight: 550;
 }
 
-/* 三级 */
+/* 三级：小写罗马数字，弱化颜色 */
+.prose ol ol ol > li {
+  padding-left: 1.5rem;
+}
+
 .prose ol ol ol > li::before {
-  width: 1rem;
-  height: 1rem;
-  top: 0.5em;
-  font-size: 0.65rem;
-  background: color-mix(in srgb, var(--color-primary) 50%, white);
+  content: counter(item, lower-roman) ".";
+  width: 1.25rem;
+  color: var(--color-primary);
+  font-weight: 550;
 }
 
 /* ========== 嵌套缩进（统一收窄） ========== */
